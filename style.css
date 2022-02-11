@@ -1,0 +1,19 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 10rem);
+  grid-template-rows: repeat(3, 10rem);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
+}
+
+.field {
+  background-color: aquamarine;
+  height: 100%;
+  width: 100%;
+}
