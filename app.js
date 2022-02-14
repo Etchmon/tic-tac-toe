@@ -2,7 +2,7 @@
 
 // Function that changes between placing X or O onclick
 
-// Onclick push the X or O into the gameboard array, no more than 9 answers allowed
+// Onclick push Player.sign into gameboard array
 
 // After every X or O placement, run a board check function that checks for 3 in a row
 
@@ -12,24 +12,57 @@
 
 const Gameboard = (() => {
 
-    let gameboard = ['X', '0', 'X', '0', 'X', '0', 'X', '0', 'X'];
+    let gameboard = new Array(9);
 
-    const arrayDisplay = () => {
-        for (i = 0; i < gameboard.length; i++) {
-            document.getElementById('array').innerHTML += gameboard[i];
-        }
+    const getIndex = (num) => gameboard[num];
+
+    const setIndex = (num, player) => {
+
+        gameboard[num] = player;
+        console.log(gameboard);
+
     }
 
-    return {
-        arrayDisplay
+    return { getIndex, setIndex };
+})();
+
+const Player = (() => {
+    let sign = 'x';
+
+    const getSign = () => sign;
+
+    return { getSign }
+})();
+
+const GameController = (() => {
+    const playerChoice = (num) => {
+        const field = Gameboard.getIndex(num);
+
+        Gameboard.setIndex(num, Player.getSign());
     }
 
+    return { playerChoice }
 })();
 
 const DisplayController = (() => {
     // Create array of the gameboard buttons
     const htmlBoard = Array.from(document.querySelectorAll('button.field'));
+    console.log(Player)
+
+    // initate board module, auto run
+    const initiateGame = (() => {
+
+        for (i = 0; i < htmlBoard.length; i++) {
+            field = htmlBoard[i];
+            console.log(field);
+            // event listener to run playerChoice with this button and index number
+            field.setAttribute('key', i);
+            field.addEventListener('click', GameController.playerChoice.bind(field, i))
+        }
+    })();
+
 
     console.log(htmlBoard);
 })();
+
 
