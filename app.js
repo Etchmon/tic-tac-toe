@@ -18,6 +18,8 @@ const Gameboard = (() => {
 
     const setIndex = (num, player) => {
 
+        let htmlBoard = document.querySelector(`.board button:nth-child(${num + 1})`);
+        htmlBoard.innerHTML = player;
         gameboard[num] = player;
         console.log(gameboard);
 
