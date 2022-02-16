@@ -37,6 +37,7 @@ const Player = (() => {
 })();
 
 const GameController = (() => {
+
     const rowCheck = (board) => {
         // Create a loop that iterates the beginning index of a row
         for (let i = 0; i < 3; i++) {
@@ -49,14 +50,32 @@ const GameController = (() => {
 
             // Check the row array for a complete row by checking if every index is 'x';
             if (row.every(field => field == 'x')) {
-                return true
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const colCheck = (board) => {
+        // Loop through the index of each row beginning
+        for (let i = 0; i < 3; i++) {
+            let col = [];
+            // Nested loop that pushes contents of a column into the column array
+            // Columns start at 0, 1, 2
+            for (let j = 0; j < 3; j++) {
+                col.push(board.getIndex(i + 3 * j))
+            }
+
+            // Check the column array for a complete column
+            if (col.every(field => field == 'x')) {
+                return true;
             }
         }
         return false;
     }
 
     const winCheck = (board) => {
-        if (rowCheck(board)) {
+        if (rowCheck(board) || colCheck(board)) {
             return true;
         }
         return false;
