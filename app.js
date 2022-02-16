@@ -74,8 +74,21 @@ const GameController = (() => {
         return false;
     }
 
+    const diagCheck = (board) => {
+        // Arrays that hold each field for a diagonal
+        diag1 = [board.getIndex(0), board.getIndex(4), board.getIndex(8)];
+        diag2 = [board.getIndex(2), board.getIndex(4), board.getIndex(6)];
+
+        if (diag1.every(field => field == 'x')) {
+            return true;
+        } else if (diag2.every(field => field == 'x')) {
+            return true;
+        }
+    }
+
+    // Check the gameboard for winning patterns
     const winCheck = (board) => {
-        if (rowCheck(board) || colCheck(board)) {
+        if (rowCheck(board) || colCheck(board) || diagCheck(board)) {
             return true;
         }
         return false;
