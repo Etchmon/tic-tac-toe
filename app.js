@@ -1,14 +1,5 @@
-// Function that add X or O to innerhtml of grid buttons when clicked
-
-// Function that changes between placing X or O onclick
-
-// Onclick push Player.sign into gameboard array
-
-// After every X or O placement, run a board check function that checks for 3 in a row
-
-// If 3 in a row announce winner
-
-// Computer function that randomly places a guess
+// -----To Do------
+// 
 
 // Gameboard Object to handle grid index and player settings
 const Gameboard = (() => {
@@ -31,6 +22,7 @@ const Gameboard = (() => {
         console.log(gameboard);
     }
 
+    // Return the functions for use outside of object
     return { getIndex, setIndex };
 })();
 
@@ -46,8 +38,11 @@ const Player = (() => {
 const GameController = (() => {
     const playerChoice = (num) => {
         const field = Gameboard.getIndex(num);
-
-        Gameboard.setIndex(num, Player.getSign());
+        if (field == undefined) {
+            Gameboard.setIndex(num, Player.getSign());
+        } else {
+            console.log('This square is filled')
+        }
     }
 
     return { playerChoice }
