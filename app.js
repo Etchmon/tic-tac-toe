@@ -10,25 +10,32 @@
 
 // Computer function that randomly places a guess
 
+// Gameboard Object to handle grid index and player settings
 const Gameboard = (() => {
+
+    // Creates an empty array with length of 9
 
     let gameboard = new Array(9);
 
+    // Takes a number and returns the index of our gameboard array
+
     const getIndex = (num) => gameboard[num];
 
-    const setIndex = (num, player) => {
+    // Takes a number and player, assigns the player to the index of our gameboard array
+    // Sets html of the button clicked to the player
 
-        let htmlBoard = document.querySelector(`.board button:nth-child(${num + 1})`);
-        htmlBoard.innerHTML = player;
+    const setIndex = (num, player) => {
+        let htmlField = document.querySelector(`.board button:nth-child(${num + 1})`);
+        htmlField.innerHTML = player;
         gameboard[num] = player;
         console.log(gameboard);
-
     }
 
     return { getIndex, setIndex };
 })();
 
 const Player = (() => {
+
     let sign = 'x';
 
     const getSign = () => sign;
