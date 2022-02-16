@@ -1,16 +1,13 @@
 // -----To Do------
-// check for 3 in a row through columns, rows, and diagonals
-// Add player 2 ability to assign 0's
+// Alert winner and restart game if winCheck returns true
 
 // Gameboard Object to handle grid index and player settings
 const Gameboard = (() => {
 
     // Creates an empty array with length of 9
-
     let gameboard = new Array(9);
 
     // Takes a number and returns the index of our gameboard array
-
     const getIndex = (num) => gameboard[num];
 
     // Takes a number and player, assigns the player to the index of our gameboard array
@@ -23,8 +20,14 @@ const Gameboard = (() => {
         console.log(gameboard);
     }
 
+    const clear = () => {
+        for (i = 0; i < gameboard.length; i++) {
+            gameboard[i] = undefined;
+        }
+    }
+
     // Return the functions for use outside of object
-    return { getIndex, setIndex };
+    return { getIndex, setIndex, clear };
 })();
 
 const Player = (() => {
@@ -94,11 +97,21 @@ const GameController = (() => {
         return false;
     }
 
+    const restart = () => {
+        // clear gameboard array, clear display
+        Gameboard.clear();
+        DisplayController.clear();
+
+    }
+
     const playerChoice = (num) => {
         const field = Gameboard.getIndex(num);
         if (field == undefined) {
             Gameboard.setIndex(num, Player.getSign());
-            console.log(winCheck(Gameboard))
+            if (winCheck(Gameboard)) {
+                alert('winner');
+                restart();
+            }
         } else {
             console.log('This square is filled');
         }
@@ -124,7 +137,13 @@ const DisplayController = (() => {
         }
     })();
 
+    const clear = () => {
+        for (i = 0; i < htmlBoard.length; i++) {
+            htmlBoard[i].innerHTML = '';
+        }
+    }
 
+    return { clear }
     console.log(htmlBoard);
 })();
 
