@@ -63,7 +63,7 @@ const GameController = (() => {
             }
 
             // Check the row array for a complete row by checking if every index is 'x';
-            if (row.every(field => field == 'x')) {
+            if (row.every(field => field == 'x') || row.every(field => field == 'o')) {
                 return true;
             }
         }
@@ -81,7 +81,7 @@ const GameController = (() => {
             }
 
             // Check the column array for a complete column
-            if (col.every(field => field == 'x')) {
+            if (col.every(field => field == 'x') || col.every(field => field == 'o')) {
                 return true;
             }
         }
@@ -93,9 +93,9 @@ const GameController = (() => {
         diag1 = [board.getIndex(0), board.getIndex(4), board.getIndex(8)];
         diag2 = [board.getIndex(2), board.getIndex(4), board.getIndex(6)];
 
-        if (diag1.every(field => field == 'x')) {
+        if (diag1.every(field => field == 'x') || diag1.every(field => field == 'o')) {
             return true;
-        } else if (diag2.every(field => field == 'x')) {
+        } else if (diag2.every(field => field == 'x') || diag2.every(field => field == 'o')) {
             return true;
         }
     }
@@ -116,7 +116,7 @@ const GameController = (() => {
     }
 
     const aiChoice = (board) => {
-        let sign = '0';
+        let sign = 'o';
         let fields = board.getEmptyIndexAll();
         let num = Math.floor(Math.random() * fields.length);
         board.setIndex(fields[num], sign);
