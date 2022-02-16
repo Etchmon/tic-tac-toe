@@ -1,6 +1,5 @@
 // -----To Do------
-// Add Ai player with sign = 0
-// Ai player makes random guess+
+// check for draw
 
 // Gameboard Object to handle grid index and player settings
 const Gameboard = (() => {
@@ -108,6 +107,16 @@ const GameController = (() => {
         return false;
     }
 
+    const drawCheck = (board) => {
+        for (let i = 0; i < 9; i++) {
+            let field = board.getIndex(i);
+            if (field == undefined) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     const restart = async function () {
         // clear gameboard array, clear display
         Gameboard.clear();
@@ -126,17 +135,29 @@ const GameController = (() => {
         const field = Gameboard.getIndex(num);
         if (field == undefined) {
             Gameboard.setIndex(num, Player.getSign());
-            aiChoice(Gameboard);
             if (winCheck(Gameboard)) {
                 setTimeout(() => alert('winner'), 100);
                 setTimeout(() => restart(), 100);
+                return;
+            } else if (drawCheck(Gameboard)) {
+                setTimeout(() => alert('draw'), 100);
+                setTimeout(() => restart(), 100);
+                return;
+            } else {
+                aiChoice(Gameboard);
+                if (winCheck(Gameboard)) {
+                    setTimeout(() => alert('Ai wins '), 100);
+                    setTimeout(() => restart(), 100);
+                    return;
+                };
             }
+
         } else {
             console.log('This square is filled');
         }
     }
 
-    return { playerChoice, winCheck }
+    return { playerChoice, winCheck, drawCheck }
 })();
 
 const DisplayController = (() => {
