@@ -1,5 +1,6 @@
 // -----To Do------
-// 
+// check for 3 in a row through columns, rows, and diagonals
+// Add player 2 ability to assign 0's
 
 // Gameboard Object to handle grid index and player settings
 const Gameboard = (() => {
@@ -36,16 +37,42 @@ const Player = (() => {
 })();
 
 const GameController = (() => {
+    const rowCheck = (board) => {
+        // Create a loop that iterates the beginning index of a row
+        for (let i = 0; i < 3; i++) {
+            let row = [];
+            // Create nested loop that pushes the content of each field in the row into the row array
+            // Rows start at index 0, 3, and 6
+            for (let j = i * 3; j < i * 3 + 3; j++) {
+                row.push(board.getIndex(j));
+            }
+
+            // Check the row array for a complete row by checking if every index is 'x';
+            if (row.every(field => field == 'x')) {
+                return true
+            }
+        }
+        return false;
+    }
+
+    const winCheck = (board) => {
+        if (rowCheck(board)) {
+            return true;
+        }
+        return false;
+    }
+
     const playerChoice = (num) => {
         const field = Gameboard.getIndex(num);
         if (field == undefined) {
             Gameboard.setIndex(num, Player.getSign());
+            console.log(winCheck(Gameboard))
         } else {
-            console.log('This square is filled')
+            console.log('This square is filled');
         }
     }
 
-    return { playerChoice }
+    return { playerChoice, winCheck }
 })();
 
 const DisplayController = (() => {
