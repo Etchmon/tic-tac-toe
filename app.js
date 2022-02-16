@@ -1,5 +1,6 @@
 // -----To Do------
-// Alert winner and restart game if winCheck returns true
+// Add Ai player with sign = 0
+// Ai player makes random guess+
 
 // Gameboard Object to handle grid index and player settings
 const Gameboard = (() => {
@@ -20,6 +21,16 @@ const Gameboard = (() => {
         console.log(gameboard);
     }
 
+    const getEmptyIndexAll = () => {
+        let fields = [];
+        for (let i = 0; i < gameboard.length; i++) {
+            if (gameboard[i] == undefined) {
+                fields.push(i);
+            }
+        }
+        return fields;
+    }
+
     const clear = () => {
         for (i = 0; i < gameboard.length; i++) {
             gameboard[i] = undefined;
@@ -27,7 +38,7 @@ const Gameboard = (() => {
     }
 
     // Return the functions for use outside of object
-    return { getIndex, setIndex, clear };
+    return { getIndex, setIndex, clear, getEmptyIndexAll };
 })();
 
 const Player = (() => {
@@ -97,20 +108,28 @@ const GameController = (() => {
         return false;
     }
 
-    const restart = () => {
+    const restart = async function () {
         // clear gameboard array, clear display
         Gameboard.clear();
         DisplayController.clear();
 
     }
 
+    const aiChoice = (board) => {
+        let sign = '0';
+        let fields = board.getEmptyIndexAll();
+        let num = Math.floor(Math.random() * fields.length);
+        board.setIndex(fields[num], sign);
+    }
+
     const playerChoice = (num) => {
         const field = Gameboard.getIndex(num);
         if (field == undefined) {
             Gameboard.setIndex(num, Player.getSign());
+            aiChoice(Gameboard);
             if (winCheck(Gameboard)) {
-                alert('winner');
-                restart();
+                setTimeout(() => alert('winner'), 100);
+                setTimeout(() => restart(), 100);
             }
         } else {
             console.log('This square is filled');
