@@ -49,6 +49,9 @@ const Player = (() => {
 
 const GameController = (() => {
 
+    let playerScore = 0;
+    let aiScore = 0;
+
     const rowCheck = (board) => {
         // Create a loop that iterates the beginning index of a row
         for (let i = 0; i < 3; i++) {
@@ -115,6 +118,10 @@ const GameController = (() => {
         return true;
     }
 
+    const getScore = () => {
+        return { playerScore, aiScore }
+    }
+
     const restart = async function () {
         // clear gameboard array, clear display
         Gameboard.clear();
@@ -135,6 +142,8 @@ const GameController = (() => {
             Gameboard.setIndex(num, Player.getSign());
             if (winCheck(Gameboard)) {
                 setTimeout(() => alert('winner'), 100);
+                playerScore++
+                DisplayController.updateScore();
                 setTimeout(() => restart(), 100);
                 return;
             } else if (drawCheck(Gameboard)) {
@@ -145,6 +154,8 @@ const GameController = (() => {
                 aiChoice(Gameboard);
                 if (winCheck(Gameboard)) {
                     setTimeout(() => alert('Ai wins '), 100);
+                    aiScore++;
+                    DisplayController.updateScore();
                     setTimeout(() => restart(), 100);
                     return;
                 };
@@ -155,13 +166,15 @@ const GameController = (() => {
         }
     }
 
-    return { playerChoice, winCheck, restart }
+    return { playerChoice, winCheck, restart, getScore }
 })();
 
 const DisplayController = (() => {
     // Create array of the gameboard buttons
     const htmlBoard = Array.from(document.querySelectorAll('button.field'));
     const restartBtn = document.getElementById('restart');
+    const playerScore = document.getElementById('player-score');
+    const aiScore = document.getElementById('ai-score');
     console.log(Player)
 
     // initate board module, auto run
@@ -184,7 +197,12 @@ const DisplayController = (() => {
         }
     }
 
-    return { clear }
+    const updateScore = () => {
+        playerScore.innerHTML = GameController.getScore().playerScore;
+        aiScore.innerHTML = GameController.getScore().aiScore;
+    }
+
+    return { clear, updateScore }
     console.log(htmlBoard);
 })();
 
