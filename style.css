@@ -1,5 +1,12 @@
 body {
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  margin: 0 15vw;
+}
+
+section {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +17,7 @@ body {
   grid-template-columns: repeat(3, 10rem);
   grid-template-rows: repeat(3, 10rem);
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
+  width: min-content;
 }
 
 .field {

@@ -1,7 +1,8 @@
 // -----To Do------
-// Create restart button
 // Clean up UI, add transitions
+// Add score tracker
 // Add option to play as O
+// revise aiChoice to stop winning moves a percentage of the time
 // Clean up comments
 
 // Gameboard Object to handle grid index and player settings
