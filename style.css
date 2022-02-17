@@ -1,9 +1,10 @@
 body {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   grid-template-rows: 1fr;
   margin: 0 15vw;
+  background-color: darkgrey;
 }
 
 section {
@@ -18,16 +19,25 @@ section {
   grid-template-rows: repeat(3, 10rem);
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5);
   width: min-content;
+  font-size: 2rem;
 }
 
 .field {
   background-color: aquamarine;
   height: 100%;
   width: 100%;
+  transition: transform 1s;
 }
 
 .ui {
   flex-direction: column;
+}
+
+.ui button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: lightseagreen;
 }
 
 .ui > * {

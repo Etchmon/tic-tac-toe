@@ -1,8 +1,7 @@
 // -----To Do------
-// Clean up UI, add transitions
-// Add score tracker
 // Add option to play as O
 // revise aiChoice to stop winning moves a percentage of the time
+// create and aiLogic object that does rowchecks, colchecks, and diagnoal checks. If there are 2 in and row,col,diag, return the empty index and set it to the aiChoice
 // Clean up comments
 
 // Gameboard Object to handle grid index and player settings
@@ -126,13 +125,13 @@ const GameController = (() => {
         // clear gameboard array, clear display
         Gameboard.clear();
         DisplayController.clear();
-
     }
 
     const aiChoice = (board) => {
         let sign = 'o';
         let fields = board.getEmptyIndexAll();
         let num = Math.floor(Math.random() * fields.length);
+
         board.setIndex(fields[num], sign);
     }
 
