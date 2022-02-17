@@ -1,17 +1,15 @@
 // -----To Do------
-// check for draw
+// Create restart button
+// Clean up UI, add transitions
+// Add option to play as O
+// Clean up comments
 
 // Gameboard Object to handle grid index and player settings
 const Gameboard = (() => {
 
-    // Creates an empty array with length of 9
     let gameboard = new Array(9);
 
-    // Takes a number and returns the index of our gameboard array
     const getIndex = (num) => gameboard[num];
-
-    // Takes a number and player, assigns the player to the index of our gameboard array
-    // Sets html of the button clicked to the player
 
     const setIndex = (num, player) => {
         let htmlField = document.querySelector(`.board button:nth-child(${num + 1})`);
@@ -36,7 +34,6 @@ const Gameboard = (() => {
         }
     }
 
-    // Return the functions for use outside of object
     return { getIndex, setIndex, clear, getEmptyIndexAll };
 })();
 
@@ -157,12 +154,13 @@ const GameController = (() => {
         }
     }
 
-    return { playerChoice, winCheck, drawCheck }
+    return { playerChoice, winCheck, restart }
 })();
 
 const DisplayController = (() => {
     // Create array of the gameboard buttons
     const htmlBoard = Array.from(document.querySelectorAll('button.field'));
+    const restartBtn = document.getElementById('restart');
     console.log(Player)
 
     // initate board module, auto run
@@ -175,6 +173,8 @@ const DisplayController = (() => {
             field.setAttribute('key', i);
             field.addEventListener('click', GameController.playerChoice.bind(field, i))
         }
+
+        restartBtn.addEventListener('click', () => GameController.restart())
     })();
 
     const clear = () => {
